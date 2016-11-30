@@ -1,0 +1,17 @@
+version: '2'
+services:
+  riak:
+    restart: always
+    container_name: crypto-riak-node
+    image: crypto/riak
+    build: docker/riak
+    ports:
+      - "8087:8087"
+      - "8098:8098"
+      - "8099:8099"
+      - "4369:4369"
+      - "6000-6001:6000-6001"
+    volumes:
+      - ./storage/riak:/var/lib/riak
+      - ./logs:/logs
+    env_file: .env
