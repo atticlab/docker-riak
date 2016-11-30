@@ -21,7 +21,7 @@ state:
 	docker-compose ps
 
 build:
-	@if [ ! -s ./.env ]; then \
+	@if [ ! -z ./.env ]; then \
 		./scripts/setup.sh; \
     fi
 
