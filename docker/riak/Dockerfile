@@ -20,6 +20,8 @@ RUN locale-gen en_US en_US.UTF-8
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ADD entrypoint.sh /
 
+VOLUME /var/lib/riak
+
 RUN echo "anti_entropy.concurrency_limit = 1" >> /etc/riak/riak.conf \
     && echo "javascript.map_pool_size = 0" >> /etc/riak/riak.conf \
     && echo "javascript.reduce_pool_size = 0" >> /etc/riak/riak.conf \
