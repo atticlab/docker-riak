@@ -17,19 +17,10 @@ RUN \
 
 RUN locale-gen en_US en_US.UTF-8
 
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-ADD entrypoint.sh /
+COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./entrypoint.sh /
+COPY ./ssl-cert/ /etc/riak
 
 VOLUME /var/lib/riak
-
-RUN echo "anti_entropy.concurrency_limit = 1" >> /etc/riak/riak.conf \
-    && echo "javascript.map_pool_size = 0" >> /etc/riak/riak.conf \
-    && echo "javascript.reduce_pool_size = 0" >> /etc/riak/riak.conf \
-    && echo "javascript.hook_pool_size = 0" >> /etc/riak/riak.conf \
-    && echo "erlang.distribution.port_range.minimum = 6000" >> /etc/riak/riak.conf \
-    && echo "erlang.distribution.port_range.maximum = 6001" >> /etc/riak/riak.conf
-
-# Expose Riak Protocol Buffers and HTTP interfaces
-EXPOSE 8087 8098
 
 CMD ["/entrypoint.sh"]

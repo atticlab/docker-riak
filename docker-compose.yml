@@ -6,9 +6,11 @@ services:
     image: crypto/riak
     build: docker/riak
     ports:
-      - "8087:8087"
-      - "8098:8098"
-      - "8099:8099"
+      # - "8087:8087"   # Protobuffer port
+      - "8098:8098"   # Http port
+      - "8088:8088"     # Https port
+      # Ports required for cluster
       - "4369:4369"
-      - "6000-6001:6000-6001"
+      - "8099:8099"
+      - "6000-6005:6000-6005"
     env_file: .env

@@ -31,11 +31,17 @@ build:
 add:
 	docker exec crypto-riak-node riak-admin cluster join ${ARGS}
 
+remove:
+	docker exec crypto-riak-node riak-admin cluster leave ${ARGS}
+
 leave-cluster:
 	docker exec crypto-riak-node riak-admin cluster leave
 
-remove:
-	docker exec crypto-riak-node riak-admin cluster leave ${ARGS}
+add-user:
+	@./scripts/add-user.sh
+
+secure:
+	@./scripts/setup-security.sh
 
 attach:
 	docker exec -i -t ${c} /bin/bash
