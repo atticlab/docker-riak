@@ -17,9 +17,7 @@ start:
 stop:
 	docker-compose stop
 
-state:
-	docker-compose ps
-
+# Build node
 build:
 	@if [ ! -s ./.env ]; then \
 		./scripts/setup.sh; \
@@ -28,25 +26,22 @@ build:
 	docker-compose build
 	docker-compose up -d
 
-add:
-	docker exec crypto-riak-node riak-admin cluster join ${ARGS}
+# Adds node to cluster
+join:
+	docker exec crypto-riak-node riak-admin cluster join riak@${ARGS}
 
+# Removes node from cluster by name
 remove:
-	docker exec crypto-riak-node riak-admin cluster leave ${ARGS}
+	docker exec crypto-riak-node riak-admin cluster leave riak@${ARGS}
 
-leave-cluster:
-	docker exec crypto-riak-node riak-admin cluster leave
-
-add-user:
+# Add acl rule to riak
+user:
 	@./scripts/add-user.sh
 
+# Enable security and allow password-auth
 secure:
 	@./scripts/setup-security.sh
 
-attach:
-	docker exec -i -t ${c} /bin/bash
-
-purge:
-	docker stop $(CONTAINERS)
-	docker rm $(CONTAINERS)
-	docker volume rm $(VOLUMES)
+# Riak security settings
+settings:
+	docker exec crypto-riak-node riak-admin security ${ARGS}
