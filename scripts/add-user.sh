@@ -40,18 +40,18 @@ while true
 do
     PERMISSIONS=$(whiptail --nocancel --title "Grant permissions" --checklist \
     "Choose user's permissions" 20 105 12 \
-    "riak_kv.get" "Retrieve objects" OFF \
-    "riak_kv.put" "Create or update objects" OFF \
-    "riak_kv.delete" "Delete objects" OFF \
-    "riak_kv.index" "Index objects using secondary indexes (2i)" OFF \
+    "riak_kv.get" "Retrieve objects" ON \
+    "riak_kv.put" "Create or update objects" ON \
+    "riak_kv.delete" "Delete objects" ON \
+    "riak_kv.index" "Index objects using secondary indexes (2i)" ON \
     "riak_kv.list_keys" "List all of the keys in a bucket" OFF \
     "riak_kv.list_buckets" "List all buckets" OFF \
     "search.admin" "Allow to create and dele indexes, add and modify search schemas" OFF \
     "search.query" "Allow to query an index" OFF \
-    "riak_core.get_bucket" "Retrieve the props associated with a bucket" OFF \
-    "riak_core.set_bucket" "Modify the props associated with a bucket" OFF \
-    "riak_core.get_bucket_type" "Retrieve the set of props associated with a bucket type" OFF \
-    "riak_core.set_bucket_type" "Modify the set of props associated with a bucket type" OFF 3>&1 1>&2 2>&3)
+    "riak_core.get_bucket" "Retrieve the props associated with a bucket" ON \
+    "riak_core.set_bucket" "Modify the props associated with a bucket" ON \
+    "riak_core.get_bucket_type" "Retrieve the set of props associated with a bucket type" ON \
+    "riak_core.set_bucket_type" "Modify the set of props associated with a bucket type" ON 3>&1 1>&2 2>&3)
     if [[ $PERMISSIONS != "" ]]; then
         PERMISSIONS=${PERMISSIONS//\"/}
         PERMISSIONS=${PERMISSIONS//\ /,}
