@@ -14,3 +14,8 @@ services:
       - "8099:8099"
       - "6000-6005:6000-6005"
     env_file: .env
+    volumes:
+      - storage:/var/lib/riak
+
+volumes:
+  storage:

@@ -21,6 +21,4 @@ COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./entrypoint.sh /
 COPY ./ssl-cert/ /etc/riak
 
-VOLUME /var/lib/riak
-
 CMD ["/entrypoint.sh"]
