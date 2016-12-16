@@ -10,8 +10,12 @@ if [[ $old_name != "riak@$RIAK_HOST" ]]; then
 fi
 
 sed -i '/^listener.http.internal =.*/d' /etc/riak/riak.conf
+sed -i '/^listener.protobuf.internal =.*/d' /etc/riak/riak.conf
+
+echo "listener.protobuf.internal = 0.0.0.0:8087" >> /etc/riak/riak.conf
 echo "listener.http.internal = 0.0.0.0:8098" >> /etc/riak/riak.conf
 echo "listener.https.internal = 0.0.0.0:8088" >> /etc/riak/riak.conf
+
 echo "ssl.certfile = /etc/riak/cert.pem" >> /etc/riak/riak.conf
 echo "ssl.keyfile = /etc/riak/key.pem" >> /etc/riak/riak.conf
 #echo "ssl.cacertfile = /etc/riak/cacertfile.pem" >> /etc/riak/riak.conf
