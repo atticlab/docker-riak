@@ -8,7 +8,7 @@ services:
     ports:
       - "8087:8087"   # Protobuffer port
       - "8088:8088"   # Https port
-      #- "8098:8098"   # Http port
+      - "8098:8098"   # Http port
       # Ports required for cluster
       - "4369:4369"
       - "8099:8099"
