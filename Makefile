@@ -30,6 +30,10 @@ build:
 join:
 	docker exec crypto-riak-node riak-admin cluster join riak@${ARGS}
 
+commit:
+	docker exec crypto-riak-node riak-admin cluster plan
+	docker exec crypto-riak-node riak-admin cluster commit
+
 # Removes node from cluster by name
 remove:
 	docker exec crypto-riak-node riak-admin cluster leave riak@${ARGS}
