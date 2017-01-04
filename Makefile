@@ -38,6 +38,9 @@ commit:
 remove:
 	docker exec crypto-riak-node riak-admin cluster leave riak@${ARGS}
 
+status:
+	docker exec crypto-riak-node riak-admin cluster status
+
 # Add acl rule to riak
 user:
 	@./scripts/add-user.sh
