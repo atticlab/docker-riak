@@ -1,5 +1,8 @@
 FROM ubuntu:trusty
 
+ENV http_proxy http://10.78.17.6:3128
+ENV https_proxy http://10.78.17.6:3128
+
 RUN \
     # Install Java 7
     sed -i.bak 's/main$/main universe/' /etc/apt/sources.list \
@@ -9,7 +12,8 @@ RUN \
     && apt-get install -y oracle-java7-installer \
 
     # Install Riak
-    && curl -fsSL https://packagecloud.io/install/repositories/basho/riak/script.deb | sudo bash \
+    && curl -fsSL "https://packagecloud.io/install/repositories/basho/riak/script.deb" > /tmp/riak_setup.sh \
+    && chmod +x /tmp/riak_setup.sh && /tmp/riak_setup.sh \
     && apt-get install -y supervisor riak=2.0.5-1 \
 
     # Cleanup
