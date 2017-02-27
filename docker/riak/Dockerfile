@@ -1,8 +1,5 @@
 FROM ubuntu:trusty
 
-ENV http_proxy http://10.78.17.6:3128
-ENV https_proxy http://10.78.17.6:3128
-
 RUN \
     # Install Java 7
     sed -i.bak 's/main$/main universe/' /etc/apt/sources.list \
