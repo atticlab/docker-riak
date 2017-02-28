@@ -6,7 +6,7 @@ regex='(https?:\/\/(www\.)?[-a-zA-Z0-9]{2,256}\.[a-z]{2,6})|((https?:\/\/)?([0-9
 
 while true
 do
-    read -ra peer -p "Riak host (should be available for other nodes) with protocol and no port"
+    read -ra peer -p "Riak host (should be available for other nodes)"
     peer=${peer,,}
     echo $peer
     if [[ ! $peer =~ $regex ]]; then
