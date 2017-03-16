@@ -17,6 +17,51 @@ do
     fi
 done
 
+SLL_TARGET_DIR="./docker/riak/ssl-cert/"
+
+while true
+do
+    read -ra ssl_certfile -p "Enter SSL certfile location path: "
+    if [[ ! -f $ssl_certfile ]]; then
+        echo "Warning: file $ssl_certfile is not exist, ignoring it"
+        break
+    else
+        cp -rf "$ssl_certfile" "$SLL_TARGET_DIR"
+        SSL_CERTFILE=$(basename $ssl_certfile)
+        echo "SSL_CERTFILE=$SSL_CERTFILE" >> ./.env
+        break
+    fi
+done
+
+while true
+do
+    read -ra ssl_keyfile -p "Enter SSL keyfile location path: "
+    if [[ ! -f $ssl_keyfile ]]; then
+        echo "Warning: file $ssl_keyfile is not exist, ignoring it"
+        break
+    else
+        cp -rf "$ssl_keyfile" "$SLL_TARGET_DIR"
+        SSL_KEYFILE=$(basename $ssl_keyfile)
+        echo "SSL_KEYFILE=$SSL_KEYFILE" >> ./.env
+        break
+    fi
+done
+
+while true
+do
+    read -ra ssl_cacert -p "Enter SSL CA cert file location path: "
+    if [[ ! -f $ssl_cacert ]]; then
+        echo "Warning: file $ssl_cacert is not exist, ignoring it"
+        break
+    else
+        cp -rf "$ssl_cacert" "$SLL_TARGET_DIR"
+        SSL_CACERT=$(basename $ssl_cacert)
+        echo "SSL_CACERT=$SSL_CACERT" >> ./.env
+        break
+    fi
+done
+
+
 peer=${peer#http://}
 peer=${peer#https://}
 
