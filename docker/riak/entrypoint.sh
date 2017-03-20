@@ -14,7 +14,6 @@ sed -i '/^listener.protobuf.internal =.*/d' /etc/riak/riak.conf
 
 echo "listener.protobuf.internal = 0.0.0.0:8087" >> /etc/riak/riak.conf
 echo "listener.http.internal = 0.0.0.0:8098" >> /etc/riak/riak.conf
-echo "listener.https.internal = 0.0.0.0:8088" >> /etc/riak/riak.conf
 
 if [[ ! -z "$SSL_CERTFILE" ]]; then 
    echo "ssl.certfile = /etc/riak/$SSL_CERTFILE" >> /etc/riak/riak.conf
@@ -23,7 +22,8 @@ if [[ ! -z "$SSL_KEYFILE" ]]; then
    echo "ssl.keyfile = /etc/riak/$SSL_KEYFILE" >> /etc/riak/riak.conf
 fi
 if [[ ! -z "$SSL_CACERT" ]]; then
-   echo "ssl.cacertfile = /etc/riak/$SSL_CACERT" >> /etc/riak/riak.conf
+    echo "ssl.cacertfile = /etc/riak/$SSL_CACERT" >> /etc/riak/riak.conf
+    echo "listener.https.internal = 0.0.0.0:8088" >> /etc/riak/riak.conf
 fi
 
 echo "anti_entropy.concurrency_limit = 1" >> /etc/riak/riak.conf

@@ -46,13 +46,16 @@ user:
 	@./scripts/add-user.sh
 
 # Enable security and allow password-auth
-secure:
-	@./scripts/setup-security.sh
+secure-pass:
+	@./scripts/setup-security-pass.sh
 
 # Enable security and allow certificate-auth
-secure-ssl:
-	@./scripts/setup-security-ssl.sh
+secure-cert:
+	@./scripts/setup-security-cert.sh
 
 # Riak security settings
 settings:
 	docker exec crypto-riak-node riak-admin security ${ARGS}
+
+attach:
+	docker exec -i -t ${c} /bin/bash
