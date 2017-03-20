@@ -6,7 +6,7 @@ regex='(https?:\/\/(www\.)?[-a-zA-Z0-9]{2,256}\.[a-z]{2,6})|((https?:\/\/)?([0-9
 
 while true
 do
-    read -ra peer -p "Riak host (should be available for other nodes)"
+    read -ra peer -p "Riak host (should be available for other nodes): "
     peer=${peer,,}
     echo $peer
     if [[ ! $peer =~ $regex ]]; then
@@ -21,7 +21,7 @@ SLL_TARGET_DIR="./docker/riak/ssl-cert/"
 
 while true
 do
-    read -ra ssl_certfile -p "Enter SSL certfile location path: "
+    read -ra ssl_certfile -p "Enter SSL certfile location path (optional, ENTER to skip): "
     if [[ ! -f $ssl_certfile ]]; then
         echo "Warning: file $ssl_certfile is not exist, ignoring it"
         break
@@ -35,7 +35,7 @@ done
 
 while true
 do
-    read -ra ssl_keyfile -p "Enter SSL keyfile location path: "
+    read -ra ssl_keyfile -p "Enter SSL keyfile location path (optional, ENTER to skip): "
     if [[ ! -f $ssl_keyfile ]]; then
         echo "Warning: file $ssl_keyfile is not exist, ignoring it"
         break
@@ -49,7 +49,7 @@ done
 
 while true
 do
-    read -ra ssl_cacert -p "Enter SSL CA cert file location path: "
+    read -ra ssl_cacert -p "Enter SSL CA cert file location path (optional, ENTER to skip): "
     if [[ ! -f $ssl_cacert ]]; then
         echo "Warning: file $ssl_cacert is not exist, ignoring it"
         break
