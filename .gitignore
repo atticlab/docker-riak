@@ -1,3 +1,3 @@
 .env
 logs/
-#docker/riak/ssl-cert/*.*
+docker/riak/ssl-cert/*.*
