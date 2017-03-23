@@ -21,10 +21,16 @@ stop:
 build:
 	@if [ ! -s ./.env ]; then \
 		./scripts/setup.sh; \
-    fi
+	fi
 
 	docker-compose build
 	docker-compose up -d
+
+#delete all docker-containers
+purge:
+	docker stop $(CONTAINERS)
+	docker rm $(CONTAINERS)
+	docker volume rm $(VOLUMES)
 
 # Adds node to cluster
 join:
@@ -46,12 +52,8 @@ user:
 	@./scripts/add-user.sh
 
 # Enable security and allow password-auth
-secure-pass:
+secure:
 	@./scripts/setup-security-pass.sh
-
-# Enable security and allow certificate-auth
-secure-cert:
-	@./scripts/setup-security-cert.sh
 
 # Riak security settings
 settings:
@@ -59,3 +61,6 @@ settings:
 
 attach:
 	docker exec -i -t ${c} /bin/bash
+
+up:
+	docker-compose up

@@ -17,52 +17,52 @@ do
     fi
 done
 
-SLL_TARGET_DIR="./docker/riak/ssl-cert/"
+SLL_TARGET_DIR="./docker/nginx/ssl-cert/"
 
-while true
-do
-    read -ra ssl_certfile -p "Enter SSL certfile location path (optional, ENTER to skip): "
-    if [[ ! -f $ssl_certfile ]]; then
-        echo "Warning: file $ssl_certfile is not exist, ignoring it"
-        break
-    else
-        cp -rf "$ssl_certfile" "$SLL_TARGET_DIR"
-        SSL_CERTFILE=$(basename $ssl_certfile)
-        echo "SSL_CERTFILE=$SSL_CERTFILE" >> ./.env
-        break
-    fi
-done
+read -ra is_use_ssl -p "Do you want to use SSL (y/n)? "
+if [[ $is_use_ssl = "y" ]]; then
+    while true
+    do
+        read -ra ssl_certfile -p "Enter SSL certfile location path: "
+        if [[ ! -f $ssl_certfile ]]; then
+            echo "Warning: file $ssl_certfile is not exist, try again"
+        else
+            cp -rf "$ssl_certfile" "$SLL_TARGET_DIR"
+            SSL_CERTFILE=$(basename $ssl_certfile)
+            echo "SSL_CERTFILE=$SSL_CERTFILE" >> ./.env
+            break
+        fi
+    done
 
-while true
-do
-    read -ra ssl_keyfile -p "Enter SSL keyfile location path (optional, ENTER to skip): "
-    if [[ ! -f $ssl_keyfile ]]; then
-        echo "Warning: file $ssl_keyfile is not exist, ignoring it"
-        break
-    else
-        cp -rf "$ssl_keyfile" "$SLL_TARGET_DIR"
-        SSL_KEYFILE=$(basename $ssl_keyfile)
-        echo "SSL_KEYFILE=$SSL_KEYFILE" >> ./.env
-        break
-    fi
-done
+    while true
+    do
+        read -ra ssl_keyfile -p "Enter SSL keyfile location path: "
+        if [[ ! -f $ssl_keyfile ]]; then
+            echo "Warning: file $ssl_keyfile is not exist, try again"
+        else
+            cp -rf "$ssl_keyfile" "$SLL_TARGET_DIR"
+            SSL_KEYFILE=$(basename $ssl_keyfile)
+            echo "SSL_KEYFILE=$SSL_KEYFILE" >> ./.env
+            break
+        fi
+    done
 
-while true
-do
-    read -ra ssl_cacert -p "Enter SSL CA cert file location path (optional, ENTER to skip): "
-    if [[ ! -f $ssl_cacert ]]; then
-        echo "Warning: file $ssl_cacert is not exist, ignoring it"
-        break
-    else
-        cp -rf "$ssl_cacert" "$SLL_TARGET_DIR"
-        SSL_CACERT=$(basename $ssl_cacert)
-        echo "SSL_CACERT=$SSL_CACERT" >> ./.env
-        break
-    fi
-done
-
+    while true
+    do
+        read -ra ssl_clientcert -p "Enter SSL Client cert file location path: "
+        if [[ ! -f $ssl_clientcert ]]; then
+            echo "Warning: file $ssl_clientcert is not exist, try again"
+        else
+            cp -rf "$ssl_clientcert" "$SLL_TARGET_DIR"
+            SSL_CLIENTCERT=$(basename $ssl_clientcert)
+            echo "SSL_CLIENTCERT=$SSL_CLIENTCERT" >> ./.env
+            break
+        fi
+    done
+fi
 
 peer=${peer#http://}
 peer=${peer#https://}
-
 echo "RIAK_HOST=$peer" >> ./.env
+echo "DOMAIN=$peer" >> ./.env
+echo "HOST=$peer" >> ./.env

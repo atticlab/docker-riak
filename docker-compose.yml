@@ -7,8 +7,6 @@ services:
     build: docker/riak
     ports:
       - "8087:8087"   # Protobuffer port
-      - "8088:8088"   # Https port
-      - "8098:8098"   # Http port
       - "8093:8093"   # Yokodzuna port
       # Ports required for cluster
       - "4369:4369"
@@ -17,6 +15,21 @@ services:
     env_file: .env
     volumes:
       - storage:/var/lib/riak
+
+  nginx-reverse:
+    restart: always
+    container_name: crypto-reverse-nginx
+    image: crypto/nginx
+    build: docker/nginx
+    ports:
+      - "8098:8098"
+      - "8088:8088"
+    volumes:
+      - ./logs:/logs
+    env_file:
+      - .env
+    links:
+      - riak
 
 volumes:
   storage:
