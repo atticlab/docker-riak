@@ -1,12 +1,12 @@
 FROM ubuntu:trusty
 
 RUN \
-    # Install Java 7
+    # Install Java 8
     sed -i.bak 's/main$/main universe/' /etc/apt/sources.list \
     && apt-get update -qq && apt-get install -y software-properties-common curl \
     && apt-add-repository ppa:webupd8team/java -y && apt-get update -qq \
-    && echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections \
-    && apt-get install -y oracle-java7-installer \
+    && echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections \
+    && apt-get install -y oracle-java8-installer \
 
     # Install Riak
     && curl -fsSL "https://packagecloud.io/install/repositories/basho/riak/script.deb" > /tmp/riak_setup.sh \
