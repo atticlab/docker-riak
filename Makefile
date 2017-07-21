@@ -64,3 +64,9 @@ attach:
 
 up:
 	docker-compose up
+
+counters:
+	@./scripts/setup-counters.sh
+
+counters-status:
+	docker exec crypto-riak-node riak-admin bucket-type status counters
