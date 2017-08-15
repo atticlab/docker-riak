@@ -13,5 +13,5 @@ chmod +x /usr/local/bin/docker-compose
 
 # Giving non-root access (optional)
 groupadd docker
-gpasswd -a attic docker
+gpasswd -a ${USER} docker
 service docker restart
