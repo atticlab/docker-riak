@@ -1,10 +1,12 @@
+#!/bin/bash
+
 # Install docker
 apt update
-apt -y install git curl make apt-transport-https ca-certificates gnupg2
-apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-echo "deb https://apt.dockerproject.org/repo debian-wheezy main" > /etc/apt/sources.list.d/docker.list
++apt -y install git curl make apt-transport-https ca-certificates gnupg2 software-properties-common
++curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
++add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
 apt update
-apt install -y docker-engine
+apt install -y docker-ce
 service docker start
 
 # Install docker-compose 
@@ -12,6 +14,18 @@ curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compos
 chmod +x /usr/local/bin/docker-compose
 
 # Giving non-root access (optional)
+LOGIN=""
+while true
+do
+    read -ra LOGIN -p "Username to add to docker user group: "
+    LOGIN=${LOGIN,,}
+    if [[ $LOGIN == '' ]]; then
+        echo "Error: username cannot be empty!"
+    else
+        break
+    fi
+done
+
 groupadd docker
-gpasswd -a ${USER} docker
+gpasswd -a ${LOGIN} docker
 service docker restart
